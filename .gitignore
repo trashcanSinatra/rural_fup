@@ -1,0 +1,8 @@
+/__pycache__
+/data
+/logs
+/fup/__pycache__
+/fup/__init__.pyc
+/fup/logger.pyc
+/fup/run.pyc
+/.vscode

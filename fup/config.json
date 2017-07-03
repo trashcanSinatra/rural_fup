@@ -1,0 +1,26 @@
+{
+	"extract_folder" : "data/",
+	"extract_file"   :  "rurpolrp-old.DAT",
+	"backup_file"    : "raw.yesterday",
+	"raw_fup"  : "raw.today",
+	"fup_today" : "fup.today",
+	"fup_yesterday" : "fup.yesterday",
+	"import_folder"  :  "\\\\ap-imgutil-dev\\Imports\\Rural\\FUP",
+	"att_count" : 3,
+	"report_file" : "logs/fup_report.txt",
+	"log_file" : "logs/log_history.txt",
+	"indexes":
+		{
+			"Policy" : 11,
+			"Agent" : 5,
+			"Name" : 14,
+			"Underwriter" : 13,
+			"Membership #" : 19
+		},
+		"info": {
+			"drawer" : "Rural",
+			"file" : "Rural",
+			"number" : "Policy",
+			"name" : "Name"
+		}
+}
