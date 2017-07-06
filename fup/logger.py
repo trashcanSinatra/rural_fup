@@ -29,7 +29,7 @@ class Logger:
 
     def open(self):
         # webbrowser.open(self._report)
-        cmd = "gedit {0}".format(self._report)
+        cmd = "notepad.exe {0}".format(self._report)
         os.system(cmd)
 
         
