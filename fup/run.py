@@ -2,7 +2,10 @@ import os
 import math
 import shutil
 import json
+import time
 import re
+from decimal import Decimal
+from random import randint
 from time import strftime as sft
 from string import Template
 from .logger import Logger
@@ -36,6 +39,7 @@ log = Logger(ROOT_DIR + REPORT_FILE, ROOT_DIR + LOG_FILE)
 log.refresh()
 log.report("REPORT FOR: {0}".format(sft("%d/%m/%Y")))
 
+
 # get_last_row: Determines the number of the last row
 # when the attribute count is divided by five
 def get_last_row(items):
@@ -44,7 +48,6 @@ def get_last_row(items):
         row = row + 1
     return row
 
-
 # ITEMS is how many attributes will be in the last row
 ITEMS = int(ATT_COUNT % 5)
 LAST_ROW = get_last_row(ITEMS)
@@ -52,6 +55,11 @@ LAST_ROW = get_last_row(ITEMS)
 log.debug("\n\nDEBUG FOR:{}".format(sft("%d/%m/%Y")))
 log.debug("LAST ROW: {}".format(LAST_ROW))
 log.debug("ITEMS in last row: {}".format(ITEMS))
+
+# Get unique FUP ID.
+FUP_NAME = "{0}{1}".format(str(math.floor(randint(1345, 9999) * ((8585929 ^ 2) / 3.4))), '.fup')
+log.report("FUP_NAME: {}".format(FUP_NAME))
+
 
 
 class Extractor:
@@ -71,9 +79,12 @@ class Extractor:
             for line in file:
                 raw_updates.append(line)
 
+        start = time.clock()
         new_polices = [line for line in raw_updates if line not in backups]
+        end = time.clock()
+
         log.report("New/Changed Policies: {0:,}".format(len(new_polices)))
-        log.debug("Raw Polies Count: {0:,}".format(len(new_polices)))
+        log.report("DIFF TIME: {} seconds".format(end - start))
         return new_polices
 
 
@@ -158,32 +169,34 @@ class Processor:
     # Builds the argument list, substitutes values, and writes the line.
     @staticmethod
     def create(queue):
+        start = time.clock()
         log.report("FUPS written: {0:,}".format(len(queue)))
-        log.report("FUPS: \n")
         template = Template(Processor.build_template())
         for row in queue:
             row = row.split('~')
             args = Processor.build_args(row)
             line = template.substitute(**args)
             Processor.write(line)
+        end = time.clock()
+        log.report("CREATION TIME: {} seconds".format(end - start))
 
 
     @staticmethod
     def write(line):
-        with open(DATA_DIR + Processor.timestamp(), 'a') as file:
+        with open(DATA_DIR + FUP_NAME, 'a') as file:
             file.write(line)
-            log.report("\t{0}".format(line.rstrip()))
+           # log.report("\t{0}".format(line.rstrip()))
 
 
     @staticmethod
     def send():
-        there_is_fup = os.path.isfile(DATA_DIR + Processor.timestamp())
-        fup_stuck = os.path.isfile(ROOT_DIR + Processor.timestamp())
+        there_is_fup = os.path.isfile(DATA_DIR + FUP_NAME)
+        fup_stuck = os.path.isfile(ROOT_DIR + FUP_NAME)
         if there_is_fup:
             if not fup_stuck:
-                shutil.move(DATA_DIR + Processor.timestamp(), ROOT_DIR)
+                shutil.move(DATA_DIR + FUP_NAME, ROOT_DIR)
             else:
-                log.report("Error dropping file. Moved to {0}. {1} needs redropped.".format(DATA_DIR, Processor.timestamp()))
+                log.report("Error dropping file. Moved to {0}. {1} needs redropped.".format(DATA_DIR, FUP_NAME))
         else:
             log.report("NO fup for you! Come back, one year.")
 
@@ -225,10 +238,6 @@ class Processor:
         open(DATA_DIR + UPDATES_FILE, "w").close()
         log.open()
     
-    @staticmethod
-    def timestamp():
-        return "{0}.fup".format(sft("%d_%m_%y%I%M"))
-
-
+    
 if __name__ == "__main__":
     print("This module is to be imported.")
