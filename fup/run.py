@@ -10,6 +10,7 @@ from time import strftime as sft
 from string import Template
 from .logger import Logger
 
+
 # Set directory Contants:
 PWD = os.path.dirname(os.path.realpath(__file__))
 ROOT_DIR = (PWD + '/../')
@@ -35,6 +36,7 @@ with open(PWD + '/config.json') as configFile:
     NAME = config['info']['name']
 
 
+# Creaete logging object.
 log = Logger(ROOT_DIR + REPORT_FILE, ROOT_DIR + LOG_FILE)
 log.refresh()
 log.report("REPORT FOR: {0}".format(sft("%d/%m/%Y")))
@@ -48,18 +50,19 @@ def get_last_row(items):
         row = row + 1
     return row
 
-# ITEMS is how many attributes will be in the last row
+# How many attributes will be in the last row.
 ITEMS = int(ATT_COUNT % 5)
+# Number of the last row given how many ITEMS.
 LAST_ROW = get_last_row(ITEMS)
 
 log.debug("\n\nDEBUG FOR:{}".format(sft("%d/%m/%Y")))
 log.debug("LAST ROW: {}".format(LAST_ROW))
 log.debug("ITEMS in last row: {}".format(ITEMS))
 
+
 # Get unique FUP ID.
 FUP_NAME = "{0}{1}".format(str(math.floor(randint(1345, 9999) * ((8585929 ^ 2) / 3.4))), '.fup')
 log.report("FUP_NAME: {}".format(FUP_NAME))
-
 
 
 class Extractor:
@@ -238,6 +241,6 @@ class Processor:
         open(DATA_DIR + UPDATES_FILE, "w").close()
         log.open()
     
-    
+
 if __name__ == "__main__":
     print("This module is to be imported.")
