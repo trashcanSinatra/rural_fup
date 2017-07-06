@@ -2,6 +2,7 @@ from fup.run import Extractor
 from fup.run import Manager as fetch
 from fup.run import Processor as fup
 
+print("WORKING...")
 
 """ Extractor compares the Care Extract file, to the saved
     copy of yesterdays extract (fup.yesterday). It will 
