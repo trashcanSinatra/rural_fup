@@ -6,3 +6,4 @@
 /fup/logger.pyc
 /fup/run.pyc
 /.vscode
+*.fup
