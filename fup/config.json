@@ -1,5 +1,5 @@
 {
-	"extract_folder" : "data/",
+	"extract_folder" : "\\\\ap-eft1-prd\\RUW00P\\",
 	"extract_file"   :  "rurpolrp-old.DAT",
 	"backup_file"    : "raw.yesterday",
 	"raw_fup"  : "raw.today",

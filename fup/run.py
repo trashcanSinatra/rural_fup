@@ -78,7 +78,7 @@ class Extractor:
         with open(DATA_DIR + BACKUP_FILE) as file:
             for line in file:
                 backups.append(line)
-        with open(DATA_DIR + EXT_FILE) as file:
+        with open(EXT_FOLDER + EXT_FILE) as file:
             for line in file:
                 raw_updates.append(line)
 
@@ -234,7 +234,7 @@ class Processor:
     @staticmethod
     def write_backups():
         backup_raw = open(DATA_DIR + BACKUP_FILE, "w")
-        with open(ROOT_DIR + EXT_FOLDER + EXT_FILE) as file:
+        with open(EXT_FOLDER + EXT_FILE) as file:
             for line in file:
                 backup_raw.write(line)
         backup_raw.close()
