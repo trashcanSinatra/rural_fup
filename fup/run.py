@@ -70,7 +70,6 @@ class Extractor:
     def __init__(self):
         self.backups = dict()
 
-
     def get_new_policies(self):
         backups = list()
         raw_updates = list()
@@ -84,10 +83,11 @@ class Extractor:
 
         start = time.clock()
         new_polices = [line for line in raw_updates if line not in backups]
-        end = time.clock()
-
-        log.report("New/Changed Policies: {0:,}".format(len(new_polices)))
+        end = time.clock()  
+          
         log.report("DIFF TIME: {} seconds".format(end - start))
+        log.report("New/Changed Policies: {0:,}".format(len(new_polices)))
+
         return new_polices
 
 
@@ -100,12 +100,10 @@ class Extractor:
 
 class Manager:
 
-
     """ Manager is responsible for getting the csv file, matching
         the indexes from config.json to the data in each row, and
         putting each string into an array to get ready for
         further parsing by the Processor class.  """
-
 
     # Sets config, puts unedited data into raw_updates array.
     def __init__(self):
@@ -175,20 +173,15 @@ class Processor:
         start = time.clock()
         log.report("FUPS written: {0:,}".format(len(queue)))
         template = Template(Processor.build_template())
-        for row in queue:
-            row = row.split('~')
-            args = Processor.build_args(row)
-            line = template.substitute(**args)
-            Processor.write(line)
-        end = time.clock()
-        log.report("CREATION TIME: {} seconds".format(end - start))
-
-
-    @staticmethod
-    def write(line):
-        with open(DATA_DIR + FUP_NAME, 'a') as file:
-            file.write(line)
-           # log.report("\t{0}".format(line.rstrip()))
+        if len(queue) > 0:
+            with open(DATA_DIR + FUP_NAME, 'a') as file:
+                for row in queue:
+                    row = row.split('~')
+                    args = Processor.build_args(row)
+                    line = template.substitute(**args)
+                    file.write(line)
+                end = time.clock()
+                log.report("CREATION TIME: {} seconds".format(end - start))
 
 
     @staticmethod
