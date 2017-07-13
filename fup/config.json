@@ -3,8 +3,6 @@
 	"extract_file"   :  "rurpolrp.DAT",
 	"backup_file"    : "raw.yesterday",
 	"raw_fup"  : "raw.today",
-	"fup_today" : "fup.today",
-	"fup_yesterday" : "fup.yesterday",
 	"import_folder"  :  "\\\\ap-imgutil-dev\\Imports\\Rural\\FUP",
 	"att_count" : 3,
 	"report_file" : "logs/fup_report.txt",

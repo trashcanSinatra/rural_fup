@@ -17,7 +17,7 @@ ROOT_DIR = (PWD + '/../')
 DATA_DIR = (ROOT_DIR + 'data/')
 
 
-# Set Module level constans from config.json:
+# Set Module level constans from config.json
 with open(PWD + '/config.json') as configFile:
     config = json.loads(configFile.read())
     EXT_FOLDER = config['extract_folder']
@@ -26,8 +26,6 @@ with open(PWD + '/config.json') as configFile:
     UPDATES_FILE = config['raw_fup']
     REPORT_FILE = config['report_file']
     LOG_FILE = config['log_file']
-    FUP_YESTERDAY = config['fup_yesterday']
-    FUP_TODAY = config['fup_today']
     IMP_FOLDER = config['import_folder']
     ATT_COUNT = config['att_count']
     DRAWER = config['info']['drawer']
