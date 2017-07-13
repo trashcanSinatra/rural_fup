@@ -1,6 +1,6 @@
 {
 	"extract_folder" : "\\\\ap-eft1-prd\\RUW00P\\",
-	"extract_file"   :  "rurpolrp-old.DAT",
+	"extract_file"   :  "rurpolrp.DAT",
 	"backup_file"    : "raw.yesterday",
 	"raw_fup"  : "raw.today",
 	"fup_today" : "fup.today",
